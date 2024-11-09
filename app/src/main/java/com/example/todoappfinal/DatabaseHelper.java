@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long id = db.insert(TABLE_TASKS, null, values);
         db.close();
         return id;
+    }
+
+    // Retrieve a task by ID
+    public Task getTaskById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_TASKS, null, COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            Task task = new Task(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DEADLINE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COMPLETED)) == 1
+            );
+            cursor.close();
+            db.close();
+            return task;
+        }
+        db.close();
+        return null;
+    }
+
+    // Update a task in the database
+    public boolean updateTask(int id, String name, String description, String deadline) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_DEADLINE, deadline);
+
+        int rowsUpdated = db.update(TABLE_TASKS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+
+        return rowsUpdated > 0;  // Returns true if the update was successful
+    }
+
+
+    // Delete a task from the database
+    public int deleteTask(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rows = db.delete(TABLE_TASKS, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+        return rows;
     }
 
     // Retrieve all incomplete tasks
@@ -106,27 +154,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_COMPLETED, 1);
-        int rows = db.update(TABLE_TASKS, values, COLUMN_ID + "=?",
-                new String[]{String.valueOf(id)});
-        db.close();
-        return rows;
-    }
-
-    // Delete a task from the database
-    public int deleteTask(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int rows = db.delete(TABLE_TASKS, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
-        db.close();
-        return rows;
-    }
-
-    // Update a task in the database
-    public int updateTask(int id, String name, String description, String deadline) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, name);
-        values.put(COLUMN_DESCRIPTION, description);
-        values.put(COLUMN_DEADLINE, deadline);
         int rows = db.update(TABLE_TASKS, values, COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)});
         db.close();

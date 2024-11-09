@@ -25,29 +25,50 @@
         android:textSize="16sp"
         android:textStyle="italic" />
 
-    <!-- Horizontal LinearLayout to contain Complete and Delete buttons -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_task_deadline"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="3">
 
         <Button
             android:id="@+id/btn_complete"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Complete"
+            android:textSize="12sp"
+            android:padding="8dp"
             android:backgroundTint="@android:color/holo_green_dark"
             android:textColor="@android:color/white"
             android:layout_marginEnd="8dp"/>
 
         <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_edit"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Delete"
+            android:textSize="12sp"
+            android:padding="8dp"
             android:backgroundTint="@android:color/holo_red_dark"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
 </RelativeLayout>

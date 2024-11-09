@@ -24,7 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
         completedTaskList = dbHelper.getCompletedTasks();
 
         // Initialize adapter with isHistoryView set to true
-        adapter = new TaskAdapter(completedTaskList, dbHelper, true);
+        adapter = new TaskAdapter(completedTaskList, dbHelper, true,this);
         recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewHistory.setAdapter(adapter);
     }

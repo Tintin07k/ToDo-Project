@@ -5,25 +5,30 @@ public class Task {
     private String name;
     private String description;
     private String deadline;
-    private boolean completed;
+    private boolean isCompleted;
 
-    public Task(int id, String name, String description, String deadline, boolean completed) {
+    // Constructor
+    public Task(int id, String name, String description, String deadline, boolean isCompleted) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.deadline = deadline;
-        this.completed = completed;
+        this.isCompleted = isCompleted;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public int getId() { return id; }
-    public String getName() { return name; }
-    public String getDescription() { return description; }
-    public String getDeadline() { return deadline; }
-    public boolean isCompleted() { return completed; }
+    public void setId(int id) { this.id = id; }
 
+    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getDeadline() { return deadline; }
     public void setDeadline(String deadline) { this.deadline = deadline; }
-    public void setCompleted(boolean completed) { this.completed = completed; }
+
+    public boolean isCompleted() { return isCompleted; }
+    public void setCompleted(boolean completed) { isCompleted = completed; }
 }

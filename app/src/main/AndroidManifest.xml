@@ -58,6 +58,8 @@
         </intent-filter>
     </receiver>
 
+        <activity android:name=".EditTaskActivity"></activity>
+
     <!-- Permissions for Notifications and Alarm -->
 
 
